@@ -39,6 +39,13 @@
               <v-list-item-title>
                 <span>{{ shorted }}</span>
               </v-list-item-title>
+              <template v-slot:append>
+                <v-expand-x-transition>
+                  <v-btn variant="text" icon @click="deleteLink(index)">
+                    <v-icon color="error">mdi-delete</v-icon>
+                  </v-btn>
+                </v-expand-x-transition>
+              </template>
             </v-list-item>
           </template>
         </v-slide-y-transition>
@@ -94,6 +101,15 @@ export default {
     },
     copyToClipboard() {
 
+    },
+    deleteLink(index) {
+      let newList = []
+      for (let i = 0; i < this.shortedList.length; i++) {
+        if (i != index){
+          newList.push(this.shortedList[i]);
+        }
+      }
+      this.shortedList = newList;
     }
   }
 }

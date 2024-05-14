@@ -11,8 +11,9 @@
             <v-row>
               <v-col cols="10">
                 <v-form ref="form">
-                  <v-text-field label="url" variant="outlined" clear-icon="mdi-close-circle"
-                    hint="Here to put the link you want to short" :rules="[rules.required, rules.urllink]" clearable>
+                  <v-text-field label="url" :loading="loading" variant="outlined" clear-icon="mdi-close-circle"
+                    hint="Here to put the link you want to short" :rules="[rules.required, rules.urllink]"
+                    clearable>
                   </v-text-field>
                 </v-form>
               </v-col>
@@ -36,6 +37,8 @@
 export default {
   data() {
     return {
+      loaded: false,
+      loading: false,
       rules: {
         required: value => !!value || 'Field is required',
         urllink: (v) => !v || this.validateUrllink(v) || "Not a valid url",
@@ -46,6 +49,13 @@ export default {
     shortLink() {
       this.$refs.form.validate().then((status) => {
         if (status.valid) {
+          this.loading = true
+
+          setTimeout(() => {
+            this.loading = false
+            this.loaded = true
+          }, 2000)
+
           // TODO
           console.log("TODO send link")
         } else {

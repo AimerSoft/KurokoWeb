@@ -12,8 +12,8 @@
               <v-col cols="10">
                 <v-form ref="form">
                   <v-text-field label="url" :loading="loading" variant="outlined" clear-icon="mdi-close-circle"
-                    hint="Here to put the link you want to short" :rules="[rules.required, rules.urllink]"
-                    clearable>
+                    v-model="originLink" hint="Here to put the link you want to short"
+                    :rules="[rules.required, rules.urllink]" clearable>
                   </v-text-field>
                 </v-form>
               </v-col>
@@ -26,8 +26,22 @@
       </v-card>
     </v-row>
     <v-row justify="center">
-      <v-card class="custom-card">
-        asdfasd
+      <v-card v-if="shortedList.length > 0" class="custom-card">
+        <v-slide-y-transition class="py-0" tag="v-list" group>
+          <template v-for="(shorted, index) in shortedList" :key="`${i}-shorted`">
+            <v-divider v-if="index !== 0" :key="`${index}-divider`"></v-divider>
+            <v-list-item @click="copyToClipboard">
+              <template v-slot:prepend>
+                <v-icon>
+                  mdi-clipboard-text-multiple-outline
+                </v-icon>
+              </template>
+              <v-list-item-title>
+                <span>{{ shorted }}</span>
+              </v-list-item-title>
+            </v-list-item>
+          </template>
+        </v-slide-y-transition>
       </v-card>
     </v-row>
   </v-container>
@@ -37,6 +51,11 @@
 export default {
   data() {
     return {
+      originLink: "",
+      shortedList: [
+        "https://baidu.com/",
+        "https://map.baidu.com/"
+      ],
       loaded: false,
       loading: false,
       rules: {
@@ -54,7 +73,9 @@ export default {
           setTimeout(() => {
             this.loading = false
             this.loaded = true
-          }, 2000)
+          }, 800)
+
+          this.shortedList.push(this.originLink)
 
           // TODO
           console.log("TODO send link")
@@ -71,6 +92,9 @@ export default {
         return false;
       }
     },
+    copyToClipboard() {
+
+    }
   }
 }
 </script>

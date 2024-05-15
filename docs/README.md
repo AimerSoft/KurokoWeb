@@ -8,4 +8,9 @@
 
 ## 如何部署
 
-TODO
+```bash
+yarn install
+yarn build
+```
+
+使用你喜欢的 web server 托管 `./dist` 文件即可！

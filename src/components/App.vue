@@ -74,11 +74,13 @@
 </template>
 
 <script>
+import requests from "../utils/requests";
+
 export default {
   data() {
     return {
       originLink: "",
-      shortedList: ["https://baidu.com/", "https://map.baidu.com/"],
+      shortedList: [],
       loading: false,
       alert: false,
       rules: {
@@ -92,15 +94,20 @@ export default {
       this.$refs.form.validate().then((status) => {
         if (status.valid) {
           this.loading = true;
-
-          setTimeout(() => {
-            this.loading = false;
-          }, 800);
-
-          this.shortedList.push(this.originLink);
-
-          // TODO
-          console.log("TODO send link");
+          var bodyFormData = new FormData();
+          bodyFormData.append("url", this.originLink)
+          requests
+            .post("kuroko", bodyFormData)
+            .then((res) => {
+              if (res.data.code === 0) {
+                this.shortedList.push(res.data.data);
+                this.loading = false;
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+              this.loading = false;
+            });
         } else {
           // do nothing
           return;

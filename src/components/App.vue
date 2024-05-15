@@ -1,5 +1,4 @@
 <template>
-  <!-- <h1>Kuroko 短链接</h1> -->
   <v-container>
     <v-row justify="center">
       <v-card class="custom-card">
@@ -12,9 +11,10 @@
               <v-col cols="10">
                 <v-form ref="form">
                   <v-text-field label="url" :loading="loading" variant="outlined" clear-icon="mdi-close-circle"
-                    v-model="originLink" hint="Here to put the link you want to short"
+                    v-model="originLink" hint="Here to put the link you want to short" @keydown.enter="shortLink"
                     :rules="[rules.required, rules.urllink]" clearable>
                   </v-text-field>
+                  <v-text-field v-show="false">https://github.com/vuetifyjs/vuetify/issues/4302</v-text-field>
                 </v-form>
               </v-col>
               <v-col cols="2">
@@ -27,14 +27,17 @@
     </v-row>
     <v-row justify="center">
       <v-card v-if="shortedList.length > 0" class="custom-card">
+        <v-alert v-model="alert" text="Link has been copied to clipboard!"></v-alert>
         <v-slide-y-transition class="py-0" tag="v-list" group>
           <template v-for="(shorted, index) in shortedList" :key="`${i}-shorted`">
             <v-divider v-if="index !== 0" :key="`${index}-divider`"></v-divider>
-            <v-list-item @click="copyToClipboard">
+            <v-list-item>
               <template v-slot:prepend>
-                <v-icon>
-                  mdi-clipboard-text-multiple-outline
-                </v-icon>
+                <v-btn variant="text" icon @click="copyToClipboard(shorted)">
+                  <v-icon>
+                    mdi-clipboard-text-multiple-outline
+                  </v-icon>
+                </v-btn>
               </template>
               <v-list-item-title>
                 <span>{{ shorted }}</span>
@@ -65,6 +68,7 @@ export default {
       ],
       loaded: false,
       loading: false,
+      alert: false,
       rules: {
         required: value => !!value || 'Field is required',
         urllink: (v) => !v || this.validateUrllink(v) || "Not a valid url",
@@ -99,13 +103,22 @@ export default {
         return false;
       }
     },
-    copyToClipboard() {
-
+    copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(function () {
+        console.log('Async: Copying to clipboard was successful!');
+      }, function (err) {
+        console.error('Async: Could not copy text: ', err);
+        return
+      });
+      this.alert = true;
+      setTimeout(() => {
+        this.alert = false;
+      }, 800)
     },
     deleteLink(index) {
       let newList = []
       for (let i = 0; i < this.shortedList.length; i++) {
-        if (i != index){
+        if (i != index) {
           newList.push(this.shortedList[i]);
         }
       }

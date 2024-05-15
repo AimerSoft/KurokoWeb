@@ -47,10 +47,7 @@
           text="Link has been copied to clipboard!"
         ></v-alert>
         <v-slide-y-transition class="py-0" tag="v-list" group>
-          <template
-            v-for="(shorted, index) in shortedList"
-            :key="`${i}-shorted`"
-          >
+          <template v-for="(shorted, index) in shortedList" :key="index">
             <v-divider v-if="index !== 0" :key="`${index}-divider`"></v-divider>
             <v-list-item>
               <template v-slot:prepend>
@@ -112,7 +109,7 @@ export default {
     },
     validateUrllink(urllink) {
       if (
-        /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g.test(
+        /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g.test(
           urllink
         )
       ) {

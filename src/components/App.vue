@@ -1,6 +1,6 @@
 <template>
-  <v-container class="d-flex justify-center align-center fill-height">
-    <v-row justify="center">
+  <v-container class="d-flex justify-center align-center">
+    <v-row justify="center" class="mt-8">
       <v-col cols="12" md="9" lg="6">
         <v-card class="elevation-12 rounded-xl pa-12" max-width="1024px">
           <v-row justify="center">
@@ -193,3 +193,12 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.image-container {
+  background-image: url('../assets/background.jpg');
+  background-size: cover;
+  background-position: center;
+  padding: 16px;
+}
+</style>

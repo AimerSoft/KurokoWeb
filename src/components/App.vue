@@ -1,7 +1,7 @@
 <template>
-  <v-container>
+  <v-container class="flex-box">
     <v-row justify="center">
-      <v-card class="custom-card">
+      <v-card :style="{ width: '60%' }">
         <v-toolbar>
           <v-toolbar-title>Kuroko 短链接</v-toolbar-title>
           <v-spacer></v-spacer>
@@ -179,9 +179,11 @@ export default {
 </script>
 
 <style>
-.custom-card {
-  max-width: 1024px;
-  width: 60%;
-  margin-top: 32px;
+.flex-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
 }
 </style>

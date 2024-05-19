@@ -1,5 +1,5 @@
 <template>
-  <v-container class="flex-box">
+  <v-container class="d-flex justify-center align-center fill-height">
     <v-row justify="center">
       <v-card :style="{ width: '60%' }">
         <v-toolbar>
@@ -9,14 +9,29 @@
             <v-icon>mdi-brightness-6</v-icon>
           </v-btn>
         </v-toolbar>
-        <v-card-title> 将链接通过十一维进行空间移动！ </v-card-title>
+        <!-- <v-card-title>  </v-card-title> -->
+        <v-card-title>
+          <v-container>
+            <v-row justify="center">
+              <v-col cols="6">
+                <v-img
+                  height="300"
+                  src="../assets/kuroko.png"
+                  aspect-ratio="1/1"
+                  alt="Kuroko"
+                ></v-img>
+              </v-col>
+            </v-row>
+            <v-row justify="center"> 将链接通过十一维进行空间移动！ </v-row>
+          </v-container>
+        </v-card-title>
         <v-card-actions>
           <v-container>
             <v-row>
               <v-col cols="10">
                 <v-form ref="form">
                   <v-text-field
-                    label="url"
+                    label="你的长链接"
                     :loading="loading"
                     variant="outlined"
                     clear-icon="mdi-close-circle"
@@ -28,8 +43,8 @@
                   >
                   </v-text-field>
                   <v-text-field v-show="false"
-                    >https://github.com/vuetifyjs/vuetify/issues/4302</v-text-field
-                  >
+                    >https://github.com/vuetifyjs/vuetify/issues/4302
+                  </v-text-field>
                 </v-form>
               </v-col>
               <v-col cols="2">
@@ -39,8 +54,8 @@
                   variant="flat"
                   block
                   @click="shortLink"
-                  >空间移动</v-btn
-                >
+                  >空间移动
+                </v-btn>
               </v-col>
             </v-row>
           </v-container>
@@ -177,13 +192,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.flex-box {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-}
-</style>

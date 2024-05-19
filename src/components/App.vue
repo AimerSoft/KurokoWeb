@@ -2,6 +2,13 @@
   <v-container>
     <v-row justify="center">
       <v-card class="custom-card">
+        <v-toolbar>
+          <v-toolbar-title>Kuroko 短链接</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-btn icon @click="toggleTheme">
+            <v-icon>mdi-brightness-6</v-icon>
+          </v-btn>
+        </v-toolbar>
         <v-card-title> 将链接通过十一维进行空间移动！ </v-card-title>
         <v-card-actions>
           <v-container>
@@ -14,7 +21,7 @@
                     variant="outlined"
                     clear-icon="mdi-close-circle"
                     v-model="originLink"
-                    hint="Here to put the link you want to short"
+                    hint="在这里输入需要缩短的链接"
                     @keydown.enter="shortLink"
                     :rules="[rules.required, rules.urllink]"
                     clearable
@@ -38,42 +45,46 @@
             </v-row>
           </v-container>
         </v-card-actions>
-      </v-card>
-    </v-row>
-    <v-row justify="center">
-      <v-card v-if="shortedList.length > 0" class="custom-card">
-        <v-alert
-          v-model="alert"
-          text="Link has been copied to clipboard!"
-        ></v-alert>
-        <v-slide-y-transition class="py-0" tag="v-list" group>
-          <template v-for="(shorted, index) in shortedList" :key="index">
-            <v-divider v-if="index !== 0" :key="`${index}-divider`"></v-divider>
-            <v-list-item>
-              <template v-slot:prepend>
-                <v-btn variant="text" icon @click="copyToClipboard(shorted)">
-                  <v-icon> mdi-clipboard-text-multiple-outline </v-icon>
-                </v-btn>
-              </template>
-              <v-list-item-title>
-                <span>{{ shorted }}</span>
-              </v-list-item-title>
-              <template v-slot:append>
-                <v-expand-x-transition>
-                  <v-btn variant="text" icon @click="deleteLink(index)">
-                    <v-icon color="error">mdi-delete</v-icon>
+        <v-divider v-if="shortedList.length > 0"></v-divider>
+        <v-card v-if="shortedList.length > 0">
+          <v-alert
+            v-model="alert"
+            text="短链接已被复制到剪切板！"
+          ></v-alert>
+          <v-slide-y-transition class="py-0" tag="v-list" group>
+            <template v-for="(shorted, index) in shortedList" :key="index">
+              <v-divider
+                v-if="index !== 0"
+                :key="`${index}-divider`"
+              ></v-divider>
+              <v-list-item>
+                <template v-slot:prepend>
+                  <v-btn variant="text" icon @click="copyToClipboard(shorted)">
+                    <v-icon> mdi-clipboard-text-multiple-outline </v-icon>
                   </v-btn>
-                </v-expand-x-transition>
-              </template>
-            </v-list-item>
-          </template>
-        </v-slide-y-transition>
+                </template>
+                <v-list-item-title>
+                  <span>{{ shorted }}</span>
+                </v-list-item-title>
+                <template v-slot:append>
+                  <v-expand-x-transition>
+                    <v-btn variant="text" icon @click="deleteLink(index)">
+                      <v-icon color="error">mdi-delete</v-icon>
+                    </v-btn>
+                  </v-expand-x-transition>
+                </template>
+              </v-list-item>
+            </template>
+          </v-slide-y-transition>
+        </v-card>
       </v-card>
     </v-row>
   </v-container>
 </template>
 
 <script>
+import { useTheme } from "vuetify";
+import { ref } from 'vue';
 import requests from "../utils/requests";
 
 export default {
@@ -84,8 +95,8 @@ export default {
       loading: false,
       alert: false,
       rules: {
-        required: (value) => !!value || "Field is required",
-        urllink: (v) => !v || this.validateUrllink(v) || "Not a valid url",
+        required: (value) => !!value || "必须提供一个链接",
+        urllink: (v) => !v || this.validateUrllink(v) || "url 格式错误",
       },
     };
   },
@@ -151,6 +162,22 @@ export default {
       this.shortedList = newList;
     },
   },
+  setup() {
+    const theme = useTheme();
+    const darkMode = ref(false);
+
+    const toggleTheme = () => {
+      darkMode.value = !darkMode.value;
+      theme.global.name.value = darkMode.value ? 'dark' : 'light';
+      // Optional: Get value of current theme
+      console.log(`Current theme is dark? ${theme.global.current.value.dark}`);
+    };
+
+    return {
+      darkMode,
+      toggleTheme
+    };
+  }
 };
 </script>
 

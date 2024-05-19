@@ -95,9 +95,10 @@ export default {
         if (status.valid) {
           this.loading = true;
           var bodyFormData = new FormData();
-          bodyFormData.append("url", this.originLink)
+          bodyFormData.append("url", this.originLink);
+          bodyFormData.append("day", "7");
           requests
-            .post("kuroko", bodyFormData)
+            .post("k", bodyFormData)
             .then((res) => {
               if (res.data.code === 0) {
                 this.shortedList.push(res.data.data);

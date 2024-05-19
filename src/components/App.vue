@@ -47,10 +47,7 @@
         </v-card-actions>
         <v-divider v-if="shortedList.length > 0"></v-divider>
         <v-card v-if="shortedList.length > 0">
-          <v-alert
-            v-model="alert"
-            text="短链接已被复制到剪切板！"
-          ></v-alert>
+          <v-alert v-model="alert" text="短链接已被复制到剪切板！"></v-alert>
           <v-slide-y-transition class="py-0" tag="v-list" group>
             <template v-for="(shorted, index) in shortedList" :key="index">
               <v-divider
@@ -84,7 +81,7 @@
 
 <script>
 import { useTheme } from "vuetify";
-import { ref } from 'vue';
+import { ref } from "vue";
 import requests from "../utils/requests";
 
 export default {
@@ -168,16 +165,16 @@ export default {
 
     const toggleTheme = () => {
       darkMode.value = !darkMode.value;
-      theme.global.name.value = darkMode.value ? 'dark' : 'light';
+      theme.global.name.value = darkMode.value ? "dark" : "light";
       // Optional: Get value of current theme
       console.log(`Current theme is dark? ${theme.global.current.value.dark}`);
     };
 
     return {
       darkMode,
-      toggleTheme
+      toggleTheme,
     };
-  }
+  },
 };
 </script>
 

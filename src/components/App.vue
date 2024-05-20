@@ -96,8 +96,6 @@
 </template>
 
 <script>
-import { useTheme } from "vuetify";
-import { ref } from "vue";
 import requests from "../utils/requests";
 
 export default {
@@ -174,22 +172,6 @@ export default {
       }
       this.shortedList = newList;
     },
-  },
-  setup() {
-    const theme = useTheme();
-    const darkMode = ref(false);
-
-    const toggleTheme = () => {
-      darkMode.value = !darkMode.value;
-      theme.global.name.value = darkMode.value ? "dark" : "light";
-      // Optional: Get value of current theme
-      console.log(`Current theme is dark? ${theme.global.current.value.dark}`);
-    };
-
-    return {
-      darkMode,
-      toggleTheme,
-    };
-  },
+  }
 };
 </script>

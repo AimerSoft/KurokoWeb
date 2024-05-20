@@ -14,3 +14,8 @@ yarn build
 ```
 
 使用你喜欢的 web server 托管 `./dist` 文件即可！
+
+```bash
+# Quickly start server with caddy
+caddy file-server --listen :26743 --root ./dist
+```

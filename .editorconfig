@@ -6,6 +6,9 @@ end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
 
+[LICENSE]
+trim_trailing_whitespace = false
+
 [*.{md,txt}]
 indent_style = tab
 trim_trailing_whitespace = false

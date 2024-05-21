@@ -120,7 +120,7 @@ export default {
           bodyFormData.append("url", this.originLink);
           bodyFormData.append("day", "7");
           requests
-            .post("k", bodyFormData)
+            .post("", bodyFormData)
             .then((res) => {
               if (res.data.code === 0) {
                 this.shortedList.push(res.data.data);

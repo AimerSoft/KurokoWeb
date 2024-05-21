@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const service = axios.create({
-  baseURL: "https://umb.ink/",
+  baseURL: import.meta.env.VITE_API_URL_ROOT,
   timeout: 5000,
 });
 

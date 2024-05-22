@@ -66,18 +66,19 @@
                   v-if="index !== 0"
                   :key="`${index}-divider`"
                 ></v-divider>
-                <v-list-item>
+                <v-list-item @click="shorted.showOri = !shorted.showOri">
                   <template v-slot:prepend>
                     <v-btn
                       variant="text"
                       icon
-                      @click="copyToClipboard(shorted)"
+                      @click="copyToClipboard(shorted.url)"
                     >
                       <v-icon> mdi-clipboard-text-multiple-outline </v-icon>
                     </v-btn>
                   </template>
                   <v-list-item-title>
-                    <span>{{ shorted }}</span>
+                    <span v-if="!shorted.showOri">{{ shorted.url }}</span>
+                    <span v-if="shorted.showOri">{{ shorted.ori }}</span>
                   </v-list-item-title>
                   <template v-slot:append>
                     <v-expand-x-transition>
@@ -124,7 +125,11 @@ export default {
             .post("", bodyFormData)
             .then((res) => {
               if (res.data.code === 0) {
-                this.shortedList.push(res.data.data);
+                this.shortedList.push({
+                  ori: this.originLink,
+                  url: res.data.data,
+                  showOri: false,
+                });
                 this.loading = false;
               }
             })

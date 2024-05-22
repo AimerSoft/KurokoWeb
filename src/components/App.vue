@@ -66,7 +66,7 @@
                   v-if="index !== 0"
                   :key="`${index}-divider`"
                 ></v-divider>
-                <v-list-item @click="shorted.showOri = !shorted.showOri">
+                <v-list-item>
                   <template v-slot:prepend>
                     <v-btn
                       variant="text"
@@ -77,8 +77,11 @@
                     </v-btn>
                   </template>
                   <v-list-item-title>
-                    <span v-if="!shorted.showOri">{{ shorted.url }}</span>
-                    <span v-if="shorted.showOri">{{ shorted.ori }}</span>
+                    <v-tooltip :text="shorted.ori">
+                      <template v-slot:activator="{ props }">
+                        <span v-bind="props"> {{ shorted.url }}</span>
+                      </template>
+                    </v-tooltip>
                   </v-list-item-title>
                   <template v-slot:append>
                     <v-expand-x-transition>
@@ -128,7 +131,6 @@ export default {
                 this.shortedList.push({
                   ori: this.originLink,
                   url: res.data.data,
-                  showOri: false,
                 });
                 this.loading = false;
               }

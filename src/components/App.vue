@@ -38,8 +38,8 @@
                       clearable
                     >
                     </v-text-field>
-                    <v-text-field v-show="false"
-                      >https://github.com/vuetifyjs/vuetify/issues/4302
+                    <v-text-field v-show="false">
+                      https://github.com/vuetifyjs/vuetify/issues/4302
                     </v-text-field>
                   </v-form>
                 </v-col>
@@ -48,6 +48,7 @@
                     color="primary"
                     size="x-large"
                     variant="flat"
+                    min-width="80px"
                     block
                     @click="shortLink"
                     >空间移动
@@ -172,6 +173,6 @@ export default {
       }
       this.shortedList = newList;
     },
-  }
+  },
 };
 </script>
